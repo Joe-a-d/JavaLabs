@@ -1,1 +1,6 @@
 *.pdf
+bin
+FirstProgram/
+.classpath
+.project
+.settings/
