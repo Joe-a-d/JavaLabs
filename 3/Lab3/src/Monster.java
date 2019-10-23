@@ -1,5 +1,10 @@
 import java.util.Arrays;
 
+/**
+* Class which simulates a simple text based game, with methods to create "Monster" objects, and methods to update their state
+*
+* Created by Joao Almeida-Domingues # 2334590D , JP2 - LB3 , University of Glasgow 2019
+*/
 public class Monster {
 
 	private String type;
@@ -9,7 +14,7 @@ public class Monster {
 
 	/**
 	 * Creates a new Monster object with the following parameters:
-	 * 
+	 *
 	 * @param type
 	 * @param hitPoints
 	 * @param attacks
@@ -40,15 +45,22 @@ public class Monster {
 		return attackPoints;
 	}
 
+	/**
+	 * Outputs the current Monster Object's fields to screen
+	 *
+	 */
 	public String toString() {
-		String state = "State" + "\n Type: " + type + "\n Hit Points: " + hitPoints
-				+ "\n Attacks: " + Arrays.toString(attacks) + "\n Attack Points: " + Arrays.toString(attackPoints) + "\n";
+		String state = "State" + "\n Type: " + type + "\n Hit Points: " + hitPoints + "\n Attacks: "
+				+ Arrays.toString(attacks) + "\n Attack Points: " + Arrays.toString(attackPoints) + "\n";
 		return state;
 	}
 
+	/**
+	 * Updates monster hitPoints field after an attack, and validates for negative values
+	 * @param pointsToRemove
+	 */
 	public void removeHitPoints(int pointsToRemove) {
-		int hitPoints = this.hitPoints - pointsToRemove;
-		System.out.println("removing" + pointsToRemove + " from " + this.type );
+		this.hitPoints = this.hitPoints - pointsToRemove;
 		if (hitPoints < 0) {
 			this.hitPoints = 0;
 		}
@@ -56,20 +68,30 @@ public class Monster {
 	}
 
 	/**
-	 * Attack Validator.
-	 * 
+	 * Validator.
+	 *
+	 * Validates user's actions
+	 * <p>
+	 * 1. Attack_Validator : Iterates through the array of attacks, matching each value against the user input string.
+	 * <p>
+	 * 2. Self_Attack : Checks if otherMonster == thisMonster
+	 * <p>
+	 * 3. is_Alive : Checks if either monster is dead
+	 * <p>
+	 * Calls method to perform attack(i.e. remove points) if (1)=(2)=(3)=True
+	 *
 	 * @param attack
 	 * @param otherMonster
-	 * @return
 	 */
 	public boolean attack(String attack, Monster otherMonster) {
 		boolean attackExists = true;
 		int attackIndex = 0;
 
 		for (int i = 0; i < this.attacks.length; i++) {
-			System.out.println(i+"   "+attack+"     "+this.attacks[i]+"      " + attackExists);
+
 			if (this.attacks[i].equals(attack)) {
 				attackIndex = i;
+				attackExists = true;
 				break;
 			} else {
 				attackExists = false;
@@ -77,49 +99,19 @@ public class Monster {
 
 		}
 		if (otherMonster.type == this.type) {
-			System.out.println("type");
+
 			return false;
 		} else if ((otherMonster.hitPoints == 0) || (this.hitPoints == 0)) {
-			System.out.println("dead");
 			return false;
 		} else if (!attackExists) {
-			System.out.println("attack");
+
 			return attackExists;
-		
+
 		} else {
-			System.out.println(attackIndex + "  inex / attack      " + attackPoints[attackIndex]);
 			otherMonster.removeHitPoints(attackPoints[attackIndex]);
 			return true;
 		}
 
 	}
 
-
-	public static void main(String[] args) {
-		Monster moltres = new Monster("Fire", 114,
-				new String[] { "Fire Spin", "Overheat" },
-				new int[] { 14, 160 });
-				Monster articuno = new Monster("Ice", 112,
-				new String[] { "Frost Breath", "Ice Beam" },
-				new int[] { 10, 90 });
-				Monster zapdos = new Monster("Electric", 119,
-				new String[] { "Charge Beam", "Thunder" },
-				new int[] { 8, 100 });
-		/*
-		 * System.out.println(moltres); System.out.println(articuno);
-		 * System.out.println(zapdos);
-		 */		System.out.println(moltres);
-				System.out.println(moltres.attack("Fire Spin", articuno)); // true
-				System.out.println(moltres.getHitPoints()); // 114
-				System.out.println(articuno.getHitPoints()); // 98
-				System.out.println(moltres);
-				System.out.println(moltres.attack("Overheat", zapdos)); // true
-				System.out.println(zapdos.getHitPoints()); // 0
-				
-				System.out.println(moltres.attack("Bad Attack", articuno)); // false
-				System.out.println(articuno.getHitPoints()); // 98
-				System.out.println(articuno.attack("Ice Beam", articuno)); // false
-				System.out.println(articuno.getHitPoints()); // 98
-				System.out.println(zapdos.attack("Thunder", moltres)); // false
-	}
 }
