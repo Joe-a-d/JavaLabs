@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+
 
 /**
  * 
@@ -18,7 +18,7 @@ public class WaterMonster extends Monster {
 	 * @param hitPoints
 	 * @param attacks
 	 */
-	public WaterMonster (int hitPoints, ArrayList<Attack> attacks) {
+	public WaterMonster (int hitPoints, Attack[] attacks) {
 		super("Water",hitPoints, attacks);
 		
 	}

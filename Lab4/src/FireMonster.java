@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+
 
 /**
  * 
@@ -19,7 +19,7 @@ public class FireMonster extends Monster {
 	 * @param hitPoints
 	 * @param attacks
 	 */
-	public FireMonster (int hitPoints, ArrayList<Attack> attacks) {
+	public FireMonster (int hitPoints, Attack[] attacks) {
 		super("Fire",hitPoints, attacks);
 		
 	}

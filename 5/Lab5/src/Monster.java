@@ -1,25 +1,28 @@
-import java.util.Arrays;
-import java.util.ArrayList;
 
+import java.util.Arrays;
+
+/**
+ * Sample solution to JP2 lab 3 2019. Represents a monster in a battling game.
+ * 
+ * @author mefoster
+ *
+ */
 public abstract class Monster {
 
 	/** The type */
-	public String type;
+	protected String type;
 	/** Current hit points */
 	protected int hitPoints;
-	/** List of attack Objects*/
+	/** List of attacks */
 	protected Attack[] attacks;
-
+	
 	/**
 	 * Creates a new Monster with the given properties.
 	 * 
 	 * @param type         The type to use
 	 * @param hitPoints    The initial hit points
 	 * @param attacks      The list of attacks
-	 * @param attackPoints The list of points for each attack
 	 */
-	
-
 	public Monster(String type, int hitPoints, Attack[] attacks) {
 		this.type = type;
 		this.hitPoints = hitPoints;
@@ -45,7 +48,7 @@ public abstract class Monster {
 	}
 
 	/**
-	 * Returns the list of attack objects available to this Monster.
+	 * Returns the list of attacks available to this Monster.
 	 * 
 	 * @return The list of attacks
 	 */
@@ -53,11 +56,23 @@ public abstract class Monster {
 		return attacks;
 	}
 
-
-	
 	/**
-	 * Attacks the given other monster, and returns a Boolean value indicating
-	 * whether the attack was successful. An attack fails if otherMonster is
+	 * Helper method to find the points for the given attack.
+	 * 
+	 * @param attack The attack to look for
+	 * @return The corresponding points, or -1 if the attack is not found
+	 */
+	private int getAttackPoints(String attackName) throws MonsterException {
+		for (Attack attack : attacks) {
+			if (attack.getName().equals(attackName)) {
+				return attack.getPoints();
+			}
+		}
+		throw new MonsterException("Invalid attack name: " + attackName);
+	}
+
+	/**
+	 * Attacks the given other monster. An attack fails if otherMonster is
 	 * equal to this monster, if either this Monster or otherMonster is
 	 * knocked out, or if the given attack name is not valid. If the attack
 	 * succeeds, the corresponding hit points are removed from otherMonster;
@@ -65,33 +80,36 @@ public abstract class Monster {
 	 * 
 	 * @param attack The attack to use
 	 * @param otherMonster The Monster to attack
-	 * @return True if the attack was successful, and false if not
 	 */
-	public void attack (String attack, Monster otherMonster) throws MonsterException {
+	public void attack(String attack, Monster otherMonster) throws MonsterException {
 		// A monster cannot attack itself
-		if (otherMonster == this.type) {
+		if (otherMonster == this) {
 			throw new MonsterException("A monster cannot attack itself");
 		}
 
 		// A monster cannot attack or be attacked if it is knocked out
-		if (this.hitPoints <= 0 || otherMonster.getHitPoints() <= 0) {
-			throw new MonsterException("You can't fetch the coffee 'cause you're dead");
+		if (this.hitPoints <= 0) {
+			throw new MonsterException("Attacking monster is knocked out");
+		}
+		if (otherMonster.hitPoints <= 0) {
+			throw new MonsterException("Attacked monster is knocked out");
 		}
 
-		// Find the attack -- if it exists, use it and return true, otherwise
-		// do nothing and return false
-		int points = getAttacks();
-		if (points < 0) {
-			throw new MonsterException("Attack not found");
+		// Check if the other monster has dodged
+		if (!otherMonster.dodge()) {
+			// Find the attack -- if it exists, use it and return true, otherwise
+			// do nothing and return false
+			otherMonster.removeHitPoints(getAttackPoints(attack));
 		} else {
-			boolean dodge = otherMonster.dodge();
-			if(dodge){
-				removeHitPoints(10);
-			}else{
-				otherMonster.removeHitPoints(points);
-			}
+			this.removeHitPoints(10);
 		}
 	}
+	
+	/**
+	 * An abstract method used when a monster might dodge in battle.
+	 * @return Whether the monster dodges
+	 */
+	protected abstract boolean dodge();
 
 	/**
 	 * Removes the given hit points from the current monster. If the hit 
@@ -107,17 +125,12 @@ public abstract class Monster {
 		}
 	}
 	
-	protected abstract boolean dodge() ;
-
 	@Override
 	/**
 	 * Returns a nice String representation of this Monster.
 	 */
 	public String toString() {
-		return "Monster [type=" + type + ", hitPoints=" + hitPoints + ", attacks=" + Arrays.toString(attacks) + " "
-				+ Arrays.toString(attackPoints);
+		return "Monster [type=" + type + ", hitPoints=" + hitPoints + ", attacks=" + Arrays.toString(attacks);
 	}
-
-	
 
 }

@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+
 
 /**
  * 
@@ -18,7 +18,7 @@ public class ElectricMonster extends Monster {
 	 * @param hitPoints
 	 * @param attacks
 	 */
-	public ElectricMonster (int hitPoints, ArrayList<Attack> attacks) {
+	public ElectricMonster (int hitPoints, Attack[] attacks) {
 		super("Electric",hitPoints, attacks);
 		
 	}
