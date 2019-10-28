@@ -1,3 +1,4 @@
+package monster;
 
 
 public class WaterMonster extends Monster {

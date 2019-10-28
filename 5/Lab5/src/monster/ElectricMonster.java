@@ -1,3 +1,4 @@
+package monster;
 
 
 public class ElectricMonster extends Monster {

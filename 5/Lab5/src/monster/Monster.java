@@ -1,3 +1,4 @@
+package monster;
 
 import java.util.Arrays;
 
@@ -132,5 +133,6 @@ public abstract class Monster {
 	public String toString() {
 		return "Monster [type=" + type + ", hitPoints=" + hitPoints + ", attacks=" + Arrays.toString(attacks);
 	}
+	
 
 }

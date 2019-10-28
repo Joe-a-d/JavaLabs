@@ -10,6 +10,12 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import monster.Attack;
+import monster.ElectricMonster;
+import monster.FireMonster;
+import monster.Monster;
+import monster.MonsterException;
+import monster.WaterMonster;
 import trainer.Trade;
 import trainer.Trainer;
 
@@ -191,5 +197,6 @@ public class TestLab5 {
 			Assert.fail("Trade constructor should not throw exception on valid trade");
 		}
 	}
+	
 
 }
