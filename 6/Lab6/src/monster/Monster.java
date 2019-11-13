@@ -1,14 +1,13 @@
 package monster;
-
 import java.util.Arrays;
 
 /**
- * Sample solution to JP2 lab 3 2019. Represents a monster in a battling game.
+ * Sample solution to JP2 lab 5 2019. Represents a monster in a battling game.
  * 
- * @author 
+ * @author mefoster
  *
  */
-public abstract class Monster implements Comparable<Monster> {
+public abstract class Monster {
 
 	/** The type */
 	protected String type;
@@ -29,8 +28,6 @@ public abstract class Monster implements Comparable<Monster> {
 		this.hitPoints = hitPoints;
 		this.attacks = attacks;
 	}
-	
-	public int compareTo(Monster )
 
 	/**
 	 * Returns the current hit points of this Monster.
@@ -98,11 +95,12 @@ public abstract class Monster implements Comparable<Monster> {
 			throw new MonsterException("Attacked monster is knocked out");
 		}
 
+		int pointsToRemove = getAttackPoints(attack);
 		// Check if the other monster has dodged
 		if (!otherMonster.dodge()) {
 			// Find the attack -- if it exists, use it and return true, otherwise
 			// do nothing and return false
-			otherMonster.removeHitPoints(getAttackPoints(attack));
+			otherMonster.removeHitPoints(pointsToRemove);
 		} else {
 			this.removeHitPoints(10);
 		}
@@ -135,6 +133,4 @@ public abstract class Monster implements Comparable<Monster> {
 	public String toString() {
 		return "Monster [type=" + type + ", hitPoints=" + hitPoints + ", attacks=" + Arrays.toString(attacks);
 	}
-	
-
 }

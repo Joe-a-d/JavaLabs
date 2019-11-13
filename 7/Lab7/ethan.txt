@@ -1,0 +1,4 @@
+Ethan
+Water^169^Waterfall^16^Outrage^110^Hydro Pump^130
+Fire^130^Fire Spin^14^Blast Burn^110^Overheat^160
+Electric^154^Rock Throw^12^Wild Charge^90
